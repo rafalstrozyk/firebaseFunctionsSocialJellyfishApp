@@ -26,28 +26,28 @@ exports.getAllScreams = (req, res) => {
 
 exports.postOneScream = (req, res) => {
 	if (req.body.body.trim() === '') {
-		return res.sendStatus(400).json({ body: 'Body must not be empty' });
-	}
-
-	const newScream = {
+		return res.status(400).json({ body: 'Body must not be empty' });
+	  }
+	
+	  const newScream = {
 		body: req.body.body,
 		userHandle: req.user.handle,
 		userImage: req.user.imageUrl,
 		createdAt: new Date().toISOString(),
 		likeCount: 0,
 		commentCount: 0
-	};
-
-	db.collection('screams')
+	  };
+	
+	  db.collection('screams')
 		.add(newScream)
 		.then((doc) => {
-			const resScream = newScream;
-			resScream.screamId = doc.id;
-			res.json(resScream);
+		  const resScream = newScream;
+		  resScream.screamId = doc.id;
+		  res.json(resScream);
 		})
 		.catch((err) => {
-			res.status(500).json({ error: 'something went wrong' });
-			console.error(err);
+		  res.status(500).json({ error: 'something went wrong' });
+		  console.error(err);
 		});
 };
 

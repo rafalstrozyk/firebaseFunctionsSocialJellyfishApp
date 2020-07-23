@@ -71,7 +71,7 @@ exports.signup = (req, res) => {
 exports.login = (req, res) => {
 	const user = {
 		email: req.body.email,
-		passwor: req.body.password
+		password: req.body.password
 	};
 
 	const { valid, errors } = validateLoginData(user);
@@ -79,7 +79,7 @@ exports.login = (req, res) => {
 
 	firebase
 		.auth()
-		.signInWithEmailAndPassword(user.email, user.passwor)
+		.signInWithEmailAndPassword(user.email, user.password)
 		.then((data) => {
 			return data.user.getIdToken();
 		})
@@ -131,13 +131,13 @@ exports.getUserDetails = (req, res) => {
 			userData.screams = [];
 			data.forEach((doc) => {
 				userData.screams.push({
-					body: doc.data().body,
-					createdAt: doc.data().createdAt,
-					userHandle: doc.data().userHandle,
-					userImg: doc.data().userImg,
-					LikeCount: doc.data().LikeCount,
-					commentCount: doc.data().commentCount,
-					screamId: doc.id
+				  body: doc.data().body,
+				  createdAt: doc.data().createdAt,
+				  userHandle: doc.data().userHandle,
+				  userImage: doc.data().userImage,
+				  likeCount: doc.data().likeCount,
+				  commentCount: doc.data().commentCount,
+				  screamId: doc.id,
 				});
 			});
 			return res.json(userData);
